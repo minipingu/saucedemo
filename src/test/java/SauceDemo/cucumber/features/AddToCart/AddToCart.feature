@@ -1,6 +1,6 @@
-Feature: Login functionality
+Feature: Button Add to Cart and Remove in homepage list product
 
-Scenario Outline: Ensure login functionality
+Scenario Outline: Test Add To Cart Button and Remove Button from Homepage Product
  Given user is on SauceDemo login page
   When user input <username> as email
   And user input <password> as password
