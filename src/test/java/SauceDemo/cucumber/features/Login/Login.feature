@@ -9,6 +9,6 @@ Scenario Outline: Ensure login functionality
 
   Examples:
 
-  |username     |password    |status|
-  |standard_user|secret_sauce|success|
-  |standard_user|wrong       |failed|
+  |username     |password    |status
+  |standard_user|secret_sauce|success
+  |standard_user|wrong       |failed

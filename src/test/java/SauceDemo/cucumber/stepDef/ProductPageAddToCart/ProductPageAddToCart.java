@@ -1,4 +1,4 @@
-package SauceDemo.cucumber.stepDef.AddToCart;
+package SauceDemo.cucumber.stepDef.ProductPageAddToCart;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -13,7 +13,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.concurrent.TimeUnit;
 
-public class AddToCart {
+public class ProductPageAddToCart {
     //set driver fir test using webdriver from selenium
     WebDriver driver;
 
@@ -50,40 +50,53 @@ public class AddToCart {
         driver.findElement(By.id("password")).sendKeys(password);
     }
 
-    @When("user click submit")
+    @Then("user click submit")
     public void user_click_submit() {
         driver.findElement(By.xpath("//input[@type='submit']")).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
     }
 
+    @When("user click product")
+    public void userClickProduct() {
+        driver.findElement(By.className("inventory_item_img")).click();
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    }
+
     @And("user click (.*) add to cart or remove$")
     public void userClickButtonAddToCartOrRemove(String button) {
         if(button.equals("Remove")){
             driver.findElement(By.xpath("//button[contains(text(),'Add to cart')]")).click();
+            System.out.println("sudah klik add to cart 1");
             driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
             driver.findElement(By.xpath("//button[contains(text(),'Remove')]")).click();
+            System.out.println("sudah klik Remove 1");
+
         } else {
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
             driver.findElement(By.xpath("//button[contains(text(),'Add to cart')]")).click();
+            System.out.println("sudah klik add to cart 2");
+
         }
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     }
+
 
     @Then("user verify (.*) added or removed$")
     public void userVerifyShopping_cart_badgeAddedOrRemoved(String shopping_cart_badge) {
         if (shopping_cart_badge.equals("added")) {
-            //assert success login
+            //assert add to cart
             String added = driver.findElement(By.xpath("//button[contains(text(),'Remove')]")).getText();
             Assert.assertEquals(added, "Remove");
             driver.close();
 
         } else {
-            //assert error message
+            //assert remove
             String empty = driver.findElement(By.xpath("//button[contains(text(),'Add to cart')]")).getText();
             Assert.assertEquals(empty, "Add to cart");
             driver.close();
 
         } //else
     }
+
 
 }

@@ -10,6 +10,6 @@ Scenario Outline: Test Add To Cart Button and Remove Button from Homepage Produc
 
   Examples:
 
-  |username     |password    |button     |shopping_cart_badge|
-  |standard_user|secret_sauce|Add To Cart|added              |
-  |standard_user|secret_sauce|Remove     |empty              |
+  |username     |password    |button     |shopping_cart_badge
+  |standard_user|secret_sauce|Add To Cart|added
+  |standard_user|secret_sauce|Remove     |empty
