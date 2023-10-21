@@ -1,4 +1,4 @@
-package SauceDemo.cucumber.stepDef.Login;
+package SauceDemo.cucumber.stepDef.AddToCart;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -13,7 +13,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.concurrent.TimeUnit;
 
-public class Login {
+public class AddToCart {
     //set driver fir test using webdriver from selenium
     WebDriver driver;
 
@@ -57,19 +57,30 @@ public class Login {
 
     }
 
-    @Then("user verify (.*) login result$")
-    public void user_verify_success_login_result(String status){
-        //assertion
-        if (status.equals("success")) {
+    @And("user click (.*) add to cart or remove$")
+    public void userClickButtonAddToCartOrRemove(String button) {
+        if(button.equals("Remove")){
+            driver.findElement(By.xpath("//button[contains(text(),'Add to cart')]")).click();
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+            driver.findElement(By.xpath("//button[contains(text(),'Remove')]")).click();
+        } else {
+            driver.findElement(By.xpath("//button[contains(text(),'Add to cart')]")).click();
+        }
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    }
+
+    @Then("user verify (.*) added or removed$")
+    public void userVerifyShopping_cart_badgeAddedOrRemoved(String shopping_cart_badge) {
+        if (shopping_cart_badge.equals("added")) {
             //assert success login
-            String logout = driver.findElement(By.xpath("//span[contains(text(),'Products')]")).getText();
-            Assert.assertEquals(logout, "Products");
+            String added = driver.findElement(By.className("shopping_cart_badge")).getText();
+            Assert.assertEquals(added, "1");
             driver.close();
 
         } else {
             //assert error message
-            String wrong_credential = driver.findElement(By.xpath("//h3")).getText();
-            Assert.assertEquals(wrong_credential, "Epic sadface: Username and password do not match any user in this service");
+            String empty = driver.findElement(By.className("shopping_cart_link")).getText();
+            Assert.assertEquals(empty, "");
             driver.close();
 
         } //else
